@@ -23,6 +23,12 @@ export default async function Home() {
           লগইন
         </Link>
       )}
+      <Link
+        href="/calculator"
+        className="rounded-lg bg-black px-5 py-3 text-white"
+      >
+        ভাড়া যাচাই করুন
+      </Link>
     </main>
   );
 }
