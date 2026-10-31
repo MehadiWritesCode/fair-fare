@@ -356,3 +356,86 @@ body {
     display: none;
   }
 }
+
+/* buttons */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 54px;
+  padding: 0 1.6rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--ink);
+  background: var(--signal);
+  border-radius: 14px;
+  box-shadow: 0 2px 0 rgba(23, 40, 58, 0.25);
+  transition: background 0.15s;
+}
+.btn-primary:hover {
+  background: #f5b500;
+}
+.btn-primary:active {
+  transform: translateY(1px);
+}
+
+.btn-quiet {
+  display: inline-flex;
+  align-items: center;
+  min-height: 42px;
+  padding: 0 0.9rem;
+  font-weight: 600;
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+.btn-quiet:hover {
+  border-color: var(--ink);
+}
+
+/* simple divided list */
+.list-rows > li {
+  padding: 0.85rem 0;
+}
+.list-rows > li + li {
+  border-top: 1px solid var(--line);
+}
+
+/* mobile top bar inside the search card */
+.mobile-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+.mobile-bar .icon-btn {
+  width: 36px;
+  height: 36px;
+  margin-left: -0.4rem;
+  font-size: 1.35rem;
+  color: var(--ink);
+}
+
+/* tighter search card on phones */
+@media (max-width: 767px) {
+  .search-card {
+    padding: 0.5rem 0.65rem 0.65rem;
+  }
+  .place {
+    min-height: 48px;
+  }
+  .place input {
+    height: 46px;
+  }
+}
+
+/* hide mobile-only elements on desktop; plain CSS is needed here because
+   it beats Tailwind's layered utilities such as md:hidden */
+@media (min-width: 768px) {
+  .mobile-bar,
+  .sheet-handle {
+    display: none;
+  }
+}

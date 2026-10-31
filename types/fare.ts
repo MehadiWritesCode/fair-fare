@@ -4,7 +4,7 @@ export type FareRule = Tables<"fare_rules">;
 export type Report = Tables<"reports">;
 export type VehicleType = Enums<"vehicle_type">;
 
-// যেসব বাহনের সরকারি ভাড়া আছে
+// Vehicles that have a government-set fare.
 export type RegulatedVehicle = Extract<VehicleType, "cng" | "bus" | "minibus">;
 
 export type FareVerdict = "fair" | "slightly_high" | "overcharged";

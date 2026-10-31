@@ -40,12 +40,13 @@ function ClickHandler({ onMapClick }: { onMapClick: (p: LatLng) => void }) {
   return null;
 }
 
+// Moves the map to the selected points or route whenever they change.
 function FitView({ from, to, path }: Omit<Props, "onMapClick">) {
   const map = useMap();
 
   useEffect(() => {
     const mobile = window.matchMedia("(max-width: 767px)").matches;
-
+    // On mobile the search card (top) and sheet (bottom) cover part of the map.
     const topLeft: L.PointExpression = [40, mobile ? 200 : 60];
     const bottomRight: L.PointExpression = [40, mobile ? 340 : 60];
 

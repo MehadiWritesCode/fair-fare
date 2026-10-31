@@ -2,9 +2,11 @@ export type LatLng = { lat: number; lng: number };
 
 export type Route = {
   distanceKm: number;
+  // List of [lat, lng] points, or null when unavailable.
   path: [number, number][] | null;
 };
 
+// Straight-line distance in km. Always less than or equal to the road distance.
 export function haversineKm(a: LatLng, b: LatLng): number {
   const R = 6371;
   const toRad = (d: number) => (d * Math.PI) / 180;
@@ -16,6 +18,7 @@ export function haversineKm(a: LatLng, b: LatLng): number {
   return 2 * R * Math.asin(Math.sqrt(h));
 }
 
+// Driving route (distance and geometry) from the public OSRM demo server.
 export async function getRoute(
   from: LatLng,
   to: LatLng,
@@ -32,7 +35,7 @@ export async function getRoute(
   const data = await res.json();
   const route = data?.routes?.[0];
   if (!route || typeof route.distance !== "number") {
-    throw new Error("রুট পাওয়া যায়নি");
+    throw new Error("No route found");
   }
 
   const coords: [number, number][] | undefined = route.geometry?.coordinates;

@@ -1,24 +1,26 @@
-import type { FareRule, FareComparison } from "@/types/fare";
+import type { FareComparison } from "@/types/fare";
 
-type FareInput = Pick<
-  FareRule,
-  | "base_distance_km"
-  | "base_fare"
-  | "per_km_rate"
-  | "min_fare"
-  | "waiting_per_min"
->;
+export type FareInput = {
+  base_distance_km: number;
+  base_fare: number;
+  per_km_rate: number;
+  min_fare: number;
+  waiting_per_min: number;
+};
 
+// Fair fare in taka, rounded to a whole number.
+// Within the base distance the fare is the base fare; beyond it, extra km are
+// charged at the per-km rate. Waiting charge is added, then the minimum fare applies.
 export function calculateFare(
   rule: FareInput,
   distanceKm: number,
   waitMinutes = 0,
 ): number {
   if (!Number.isFinite(distanceKm) || distanceKm < 0) {
-    throw new Error("দূরত্ব ০ বা তার বেশি হতে হবে");
+    throw new Error("Distance must be 0 or greater");
   }
   if (!Number.isFinite(waitMinutes) || waitMinutes < 0) {
-    throw new Error("অপেক্ষার সময় ০ বা তার বেশি হতে হবে");
+    throw new Error("Waiting time must be 0 or greater");
   }
 
   const extraKm = Math.max(0, distanceKm - rule.base_distance_km);
@@ -29,6 +31,8 @@ export function calculateFare(
   return Math.round(total);
 }
 
+// Compares the driver's asked fare with the fair fare.
+// Up to 10% above counts as "slightly_high" to allow for rounding and small differences.
 export function compareFare(
   fairFare: number,
   askedFare: number,

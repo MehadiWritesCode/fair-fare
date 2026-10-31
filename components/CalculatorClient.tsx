@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { FareComparison, FareRule, VehicleType } from "@/types/fare";
 import { calculateFare, compareFare } from "@/lib/fare/calculateFare";
@@ -211,14 +212,27 @@ export default function CalculatorClient({ rules }: { rules: FareRule[] }) {
     <main className="app">
       <div className="sidebar">
         <header className="px-5 pt-5 max-md:sr-only">
-          <h1 className="font-display text-3xl font-extrabold leading-none">
+          <Link
+            href="/"
+            className="muted inline-flex items-center gap-1 text-sm font-semibold hover:underline"
+          >
+            <span aria-hidden="true">←</span> হোম
+          </Link>
+          <h1 className="font-display mt-2 text-3xl font-extrabold leading-none">
             ভাড়া কত?
           </h1>
           <p className="muted mt-1 text-sm">সরকারি রেটে ন্যায্য ভাড়া যাচাই</p>
         </header>
 
         {/* search */}
+
         <section className="search-card" aria-label="যাত্রাপথ">
+          <div className="mobile-bar flex items-center">
+            <Link href="/" className="icon-btn" aria-label="হোমে ফিরুন">
+              ←
+            </Link>
+          </div>
+
           <div className="space-y-2">
             <PlaceSearch
               kind="from"
@@ -263,6 +277,7 @@ export default function CalculatorClient({ rules }: { rules: FareRule[] }) {
               }
             />
           </div>
+
           <p
             className={`muted mt-2 px-1 text-sm ${geoMsg ? "" : "max-md:hidden"}`}
             aria-live="polite"

@@ -8,6 +8,7 @@ export type Place = {
   lng: number;
 };
 
+// Rough bounds of Bangladesh: west, south, east, north.
 const BD_BBOX = "88.0,20.5,92.7,26.8";
 const PHOTON = "https://photon.komoot.io";
 
@@ -65,6 +66,7 @@ export async function searchPlaces(
   return features.map(toPlace).filter((p): p is Place => p !== null);
 }
 
+// Name of the place at a tapped map point, or null if none is found.
 export async function reverseGeocode(
   p: LatLng,
   signal?: AbortSignal,

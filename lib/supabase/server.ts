@@ -19,8 +19,8 @@ export async function createClient() {
               cookieStore.set(name, value, options),
             );
           } catch {
-            // সার্ভার কম্পোনেন্ট থেকে কল হলে উপেক্ষা করা যায়,
-            // কারণ middleware সেশন রিফ্রেশ করছে
+            // Safe to ignore when called from a Server Component,
+            // because the proxy refreshes the session.
           }
         },
       },

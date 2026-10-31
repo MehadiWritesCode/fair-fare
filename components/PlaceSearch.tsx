@@ -8,6 +8,7 @@ type Props = {
   kind: "from" | "to";
   label: string;
   placeholder: string;
+  // Committed label owned by the parent (set by map tap, GPS or swap).
   value: string;
   active: boolean;
   near: LatLng;
@@ -34,7 +35,7 @@ export default function PlaceSearch({
   const listId = `${uid}-list`;
 
   const [query, setQuery] = useState(value);
-  const [dirty, setDirty] = useState(false);
+  const [dirty, setDirty] = useState(false); // true once the user has typed
   const [results, setResults] = useState<Place[]>([]);
   const [status, setStatus] = useState<"idle" | "loading" | "empty" | "error">(
     "idle",
@@ -44,6 +45,7 @@ export default function PlaceSearch({
   const [prevValue, setPrevValue] = useState(value);
   const wrapRef = useRef<HTMLDivElement>(null);
 
+  // When the parent changes the label, mirror it in the input without searching.
   if (value !== prevValue) {
     setPrevValue(value);
     setQuery(value);
@@ -53,6 +55,7 @@ export default function PlaceSearch({
     setStatus("idle");
   }
 
+  // Debounced search: runs 350ms after typing stops.
   useEffect(() => {
     const q = query.trim();
     if (!dirty || q.length < 3) return;
@@ -76,6 +79,7 @@ export default function PlaceSearch({
     };
   }, [query, dirty, near]);
 
+  // Close the list when clicking outside.
   useEffect(() => {
     const onDown = (e: PointerEvent) => {
       if (!wrapRef.current?.contains(e.target as Node)) setOpen(false);

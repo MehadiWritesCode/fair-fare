@@ -1,5 +1,6 @@
 import type { FareRule, VehicleType } from "@/types/fare";
 
+// Picks the most recent rule that is already in effect on the given date.
 export function pickRule(
   rules: FareRule[],
   vehicle: VehicleType,
